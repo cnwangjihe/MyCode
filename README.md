@@ -3,7 +3,7 @@ All code by me.
 ## Some Tips ######
 >P*.cpp    -- https://www.luogu.org/ 
 >
- >*.cpp-- http://smoj.nhedu.net/ 
+>*.cpp     -- http://smoj.nhedu.net/ 
 >
 >POJ*.cpp  -- http://poj.org/
 >
@@ -13,4 +13,8 @@ All code by me.
 >
 >LOJ*.cpp  -- https://loj.ac/
 >
->#*.cpp    -- temp cpp files
+>CF*.cpp   -- http://codeforces.com/
+>
+>#*.cpp    -- temp source code
+>
+>(eng).cpp -- UNKNOW source code
