@@ -15,6 +15,8 @@ All code by me.
 >
 >CF*.cpp   -- http://codeforces.com/
 >
+>JOY*.cpp  -- http://www.joyoi.cn/
+>
 >#*.cpp    -- temp source code
 >
 >(eng).cpp -- UNKNOW source code
