@@ -1,90 +1,48 @@
 #include <iostream>
-#include <fstream>
-#include <stdio.h>
-#include <algorithm>
+#include <cstdio>
+#include <cstring>
 #include <cmath>
-#include <string.h>
-#include <queue>
+#include <algorithm>
 
 using namespace std;
 
-const int MAXN = 1005;
-
-int tot,n;
-int dis[MAXN],head[MAXN];
-int ds[MAXN][MAXN];
-
-queue<int>q;
-
-struct Tway
-{
-	int u,v,nex;
-};
-Tway e[MAXN*MAXN*2];
-
-void add(int u,int v)
-{
-	++tot;
-	e[tot].u=u;e[tot].v=v;
-	e[tot].nex=head[u];head[u]=tot;
-	++tot;
-	e[tot].u=v;e[tot].v=u;
-	e[tot].nex=head[v];head[v]=tot;	
-}
-
-int gcd(int a,int b)
-{
-	if(a%b==0)
-		return b;
-	return gcd(b,a%b);
-}
-
-int xxx=0;
-void bfs(int beg)
-{
-	while(!q.empty())
-		q.pop();
-	q.push(beg);
-	while(!q.empty())
-	{
-		int u=q.front();q.pop();
-		
-		for(int i=head[u];i;i=e[i].nex)
-		{
-			int v=e[i].v;
-			if(dis[v]==0)
-			{
-				dis[v]=dis[u]+1;
-				q.push(v);
-			}
-		}
-
-	}
-	for(int i=1;i<=n;++i)
-		ds[beg][i]=dis[i];
-}
+const int MAXN = 10000009;
+long long phi[MAXN],f[MAXN];
+int n,m,T,phi[MAXN],prim[MAXN],tot,sum,o[MAXN],t1,t2;
+long long ans,ans2;
 
 int main()
 {
-	freopen("2368.in","r",stdin);
-	freopen("2368.out","w",stdout);
+//	freopen("2368.in","r",stdin);
+//	freopen("2368.out","w",stdout);
 	scanf("%d",&n);
-	for(int i=1;i<n;++i)
-		for(int j=i+1;j<=n;++j)
-			if(gcd(i,j)!=1)
-			{
-				add(i,j);
-			}
-	for(int i=1;i<=n;++i)
+	phi[1]=1;
+	for (int i=2;i<=n;i++) 
 	{
-		for(int j=1;j<=n;++j)
-			dis[j]=0;
-		bfs(i);
+		if (!o[i]) 
+		{
+			if ((long long)i*i>(long long)n) t1++;
+			if (i*2>n) t2++;
+			prim[++tot]=i;
+			phi[i]=i-1;
+			o[i]=i;
+		}
+		for (int j=1;j<=tot&&(long long)i*prim[j]<=n;j++)
+		{
+			o[i*prim[j]]=prim[j];
+			if (i%prim[j]==0) { phi[i*prim[j]]=phi[i]*prim[j]; break; } else phi[i*prim[j]]=phi[i]*(prim[j]-1); 
+		}
+		ans+=(long long)i-phi[i]-1;
+		if (o[i]*o[i]<=(long long)n) ans+=((long long)phi[i]-1-t1)*2;
+		f[o[i]]++;
 	}
-	int ans=0;
-	for(int i=1;i<n;++i)
-		for(int j=i+1;j<=n;++j)
-			ans+=ds[i][j];
-	printf("%d\n",ans);
+	for (int i=1;i<=n;i++) f[i]+=f[i-1];
+	for (int i=2;2*i<=n;i++) if ((long long)o[i]*o[i]>n)
+	{
+		sum=n/i-1;
+		ans+=(long long)2*sum+2*((long long)f[n/i]-sum)+3ll*((long long)n-f[n/i]-2-t2);
+	}
+	t1-=t2;
+	printf("%lld\n",ans-(long long)3*(t1-1)*t1/2);
 	return 0;
 }
