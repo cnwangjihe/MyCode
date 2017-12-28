@@ -1,5 +1,9 @@
 ## Divide By OnlineJudge ##
 
+#### Attention ####
+
+This folder will be update *ONCE A WEEK*.
+
 >P*.cpp    -- https://www.luogu.org/ 
 >
 >*.cpp     -- http://smoj.nhedu.net/ 
