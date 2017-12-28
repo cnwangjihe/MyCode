@@ -1,6 +1,5 @@
-# MyCode #
-All code by me.
-## Some Tips ######
+## Sort By Time ##
+
 >P*.cpp    -- https://www.luogu.org/ 
 >
 >*.cpp     -- http://smoj.nhedu.net/ 
@@ -18,7 +17,3 @@ All code by me.
 >JOY*.cpp  -- http://www.joyoi.cn/
 >
 >HH*.cpp   -- http://hihocoder.com/
->
->#*.cpp    -- temp source code
->
->(eng).cpp -- UNKNOW source code
