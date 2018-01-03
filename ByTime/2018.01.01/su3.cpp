@@ -50,7 +50,7 @@ Tnode _ask() {return tree[1];}
 
 int main()
 {
-	scanf("%d%d", &n, &m);
+	scanf("%d%d",&n,&m);
 	for (int i=1;i<=n;i++)
 	{
 		scanf("%d%d", &s[i].l, &s[i].r);
@@ -68,12 +68,14 @@ int main()
 	for (int l=1,r=1;r<=n;r++)
 	{
 		_add(1,1,fp,s[r].l,s[r].r,1);
-		for (;_ask().Max>=m;l++)
+			l++;
+		while (_ask().Max>=m)
 		{
 			ans=min(ans,(p[s[r].r]-p[s[r].l])-(p[s[l].r]-p[s[l].l]));
 			_add(1,1,fp,s[r].l,s[l].r,-1);
+			l++;
 		}
 	}
-	printf("%d",ans==INF?-1:ans);
+	printf("%d\n",ans==INF?-1:ans);
 	return 0;
 }
