@@ -12,7 +12,7 @@ const int MAXN = 100009;
 
 struct Tnode {int b,next,v;};
 
-Tnode st[MAXN],nd[MAXN];
+Tnode st[MAXN*10],nd[MAXN*10];
 int a[MAXN];
 bool vis[MAXN];
 int minl[MAXN],maxl[MAXN],head1[MAXN],head2[MAXN];
