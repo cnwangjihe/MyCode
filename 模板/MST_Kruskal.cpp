@@ -42,5 +42,5 @@ int main()
 		}
 	}
 	if (n>0) cout << "No Answer!!\n";
-	else cout << ans;
+	else cout << ans << '\n';
 }
