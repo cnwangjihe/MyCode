@@ -1,0 +1,158 @@
+#include <iostream>
+#include <fstream>
+#include <stdio.h>
+#include <algorithm>
+#include <cmath>
+#include <string.h>
+
+using namespace std;
+
+const int MAXN = 1000005;
+
+struct LCT
+{
+	int C[MAXN][2];
+	int rev[MAXN],sum[MAXN],val[MAXN];
+	int fa[MAXN];
+	bool Child(int u) {return C[fa[u]][1]==u;}
+	bool isroot(int u) {return (C[fa[u]][0]!=u && C[fa[u]][1]!=u);}
+	void Down(int u)
+	{
+		if (rev[u])
+		{
+			if (C[u][0]) rev[C[u][0]]^=1;
+			if (C[u][1]) rev[C[u][1]]^=1;
+			rev[u]=0;
+			swap(C[u][0],C[u][1]);
+		}
+		return ;
+	}
+	void Push(int u)
+	{
+		if (!isroot(u))
+			Push(fa[u]);
+		Down(u);
+	}
+	void Pushup(int u)
+	{
+		sum[u]=val[u];
+		if (C[u][0]) sum[u]^=sum[C[u][0]];
+		if (C[u][1]) sum[u]^=sum[C[u][1]];
+		return ;
+	}
+	void Rotate(int u)
+	{
+		int v = fa[u], w = fa[v], t = Child(u);
+		if (!isroot(v))
+			C[w][Child(v)] = u;
+		fa[C[u][t^1]] = v, C[v][t] = C[u][t^1];
+		C[u][t^1] = v, fa[u] = w, fa[v] = u;
+		Pushup(v);
+		return ;
+	}
+	void Splay(int u)
+	{
+		Push(u);
+		int v;
+		while (!isroot(u))
+		{
+		//	cerr << isroot(u) << ' ' << C[fa[u]][0] << ' ' << C[fa[u]][1] << '\n';
+			v=fa[u];
+		//	cerr << u << ' ' << v << endl;
+			if(!isroot(v))
+			{
+				if (Child(u)==Child(v))
+					Rotate(v);
+				else
+					Rotate(u);
+			}
+		//	for (int sss=0;sss<1000000000;sss++) sss+=(3%2)-1;
+			Rotate(u);
+		}
+		Pushup(u);
+		return ;
+	}
+	void Access(int u)
+	{
+		int t=0;
+		while (u)
+		{
+			Splay(u);
+			C[u][1]=t;
+			t=u;u=fa[u];
+		}
+	//	cerr << '\n';
+		return ;
+	}
+	void Makeroot(int u)
+	{
+		Access(u);
+		Splay(u);
+		rev[u]^=1;
+	}
+	int Find(int u)
+	{
+		Access(u);Splay(u);
+		while (C[u][0])
+			u=C[u][0];
+		return u;
+	}
+	void Link(int u,int v)
+	{
+		if (Find(u)==Find(v)) return ;
+		Makeroot(u);
+		fa[u]=v;
+		Splay(u);
+	}
+	int Query(int u,int v)
+	{
+		Makeroot(u);
+		Access(v);
+		Splay(v);
+		return sum[C[v][0]]^val[v];
+	}
+	void Update(int u,int value)
+	{
+		Splay(u);
+		val[u]=value;
+		sum[u]=sum[C[u][0]]^sum[C[u][1]]^val[u];
+		return ;
+	}
+	void Cut(int u,int v)
+	{
+		Makeroot(u);
+		Access(v);
+	//	cerr << "root\n";
+		Splay(v);
+		C[v][0]=fa[u]=0;
+	}
+};
+
+LCT lct;
+char c,t;
+int n,m,u,v;
+
+int main()
+{
+	scanf("%d%d",&n,&m);
+	for (int i=1;i<=n;i++)
+	{
+		scanf("%d",&v);
+		lct.val[i]=v;
+		lct.sum[i]=v;
+	}
+	for (int i=0;i<m;i++)
+	{
+		scanf("%d%d%d",&t,&u,&v);
+	//	cerr << lct.C[0][0] << ' ' << lct.C[0][1] <<'\n';
+		if (t==0)
+			printf("%d\n",lct.Query(u,v));
+		if (t==1)
+			lct.Link(u,v);
+		if (t==2)
+			lct.Cut(u,v);
+		if (t==3)
+			lct.Update(u,v);
+	}
+	return 0;
+}

@@ -1,0 +1,254 @@
+aabbabd
+
+aabb
+0123
+
+aabb
+abb
+b
+bb
+/
+
+0,1,3,2
+
+bananas
+
+rank[sa[i]]=i
+
+n n/2 n/4 ...
+
+abab#
+
+aabbab
+
+bbaayg
+bbabxdf
+
+
+bab
+
+/ 6
+aabbab 0
+ab 4
+abbab 1  x h=2
+b 5
+bab 3
+bbab 2   x h
+
+
+
+
+radix
+
+
+456
+456
+564
+675
+786
+878
+
+
+8
+aabaaaab
+k=0
+11211112
+k=1
+(1,1) (1,2) (2,1) (1,1) ....
+
+
+
+fhujgkjhgkgj
+
+kjhgaa
+kjhgkgj
+4
+
+
+jhg
+jhgkgj
+3
+
+
+
+aabaaaab
+
+aaaab     3
+aaab      4
+aab       5
+aabaaaab  0
+ab        6
+abaaaab   1
+b         7
+baaaab    2
+
+
+
+-----
+abaabba
+
+a 6
+aabba 2
+abaabba 0  h=1
+abba 3
+ba 5
+baabba 1  h=2
+bba 4
+
+abaabba 0  h=1
+
+abba 3
+
+height  sa
+0
+
+4
+
+2
+6
+
+2    2
+6    4
+8    5
+
+k=5
+
+k=7
+
+sa
+3
+2
+7
+
+
+
+abaa
+
+a
+b
+ab
+ba
+aa
+aba
+baa
+abaa
+
+___________
+
+
+
+ababax
+
+
+ababax#xababa
+
+
+
+
+A B
+A#B
+
+A
+A
+B
+
+
+
+fghfhgah
+fghfhgfghfh   h
+
+ghfhgfghfh  h-1
+
+
+
+A 6 3
+A 3 5
+A 5 7
+A 7 7
+B 7
+A 8
+B
+
+
+ababac#cababa
+
+
+aabbabd
+0123456
+
+ab
+2 5
+abb
+3
+a
+
+aab  (b)
+1 {0,1,2}
+2 {0,1}
+3 {1}
+4 {2}
+
+
+aabb
+1 {0,1,2,3}
+2 {0,1}  1
+3 {1}  2
+4 {2}   6
+5 {3}   6
+6 {2,3}  1
+
+Sx=aaaaS'x
+fa[S]=S'
+fa[fa[S]] ... 
+Sx
+
+
+parent树
+fa[i] = Right_j 包含Right i里|Right_j|最小的j
+
+
+abcdefg  R
+bcdefg   R
+cdefg    R
+defg      R'
+
+
+
+SAM
+
+S n
+Sx  n+1
+Sx R={n}
+
+
+
+S
+
+A
+
+cA
+
+abaabba
+
+-------------------------------
+
+
+
+
+bzoj 
+
+----
+A  sama  O(n)个有效状态
+B  samb
+
+f[i][j]  在A的i节点，B的j节点的最短长度
+
+
+f[root][root] = 0
+
+aasdadsa  S(x,y)
+
+
+
+
+

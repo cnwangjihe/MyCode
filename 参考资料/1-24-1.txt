@@ -1,0 +1,59 @@
+n=12 k=6 p=3
+110   020
+C(12,6)=C(1,0)*C(1,2)*C(0,0) %3
+
+
+a a^2 a^3 ... a^{p-1} 
+
+1 2 3 ... p-1
+
+t=a^f(t)
+
+t*s=a^f(t)*a^f(s)=a^{f(t)+f(s)}
+
+
+a^s=1 s<p
+a^{p-1}=1
+
+s|(p-1)
+p-1=9*25*7=p1^{a1}* p2^{a2}*...*pk^{ak}
+d=(p-1)/pi
+
+s=3*5 s=9*25
+s=7*3 s=7*3*25
+
+(aa)^u*a^v=b %c
+aa=a^{sqrt phi}
+0<=u,v<sqrt phi
+set/map: aa aa^2 aa^3 ... aa^{sqrt phi}
+(aaa)^v*b=(aa)^u %c
+aaa=a^{-1}
+b*aaa b*aaa^2 ... b*aaa^{sqrt phi}
+
+a*b % c*b=(a%c)*b
+
+15^x=5*? % 25
+15^{x-1}*3=1*? % 5
+
+d=gcd(a^v,c)
+a^u*(a^v/d)=b/d % c/d
+a^u=b/d*(a^v/d)^{-1} % c/d
+(a,c/d)=1
+
+(x-1)(x+1)=0 %p
+
+a^{d*2^r}=(a^d)^2 ^2 ^2 ...^2
+
+
+seed f(sd) f(f(sd)) fff(sd) ....
+
+
+a*b=a*(b%2)+(a*([b/2]%2+[b/4]*2))*2
+
+a=a1*M+a2
+b=b1*M+b2
+
+(a1*M+a2)(b1*M+b2)=a1*b1*M*M+...
+
+
+

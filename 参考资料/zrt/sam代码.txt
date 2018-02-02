@@ -1,0 +1,29 @@
+
+SAM
+
+void add(int w){// 加入最后一个字符w
+	L++;
+	int p=last;//p为插入前整串对应点
+	int np=++tot;// np为新整串对应点
+	l[np]=l[p]+1; // np的最长长度为p的+1
+	while(p&&!go[p][w]){ // 没有w出边直接加
+		go[p][w]=np;
+		p=f[p];
+	}
+	if(!p){ // w字符没出现过
+		f[np]=root;
+	}else{  // q为最深的有w出边的祖宗
+		int q=go[p][w];
+		if(l[p]+1==l[q]){// R集不变
+			f[np]=q;
+		}else{ // 此时需要新的nq使得len为l[p]+1。
+			int nq=++tot;
+			l[nq]=l[p]+1;
+			memcpy(go[nq],go[q],sizeof go[q]);
+			f[nq]=f[q];
+			f[q]=f[np]=nq;
+			while(p&&go[p][w]==q) go[p][w]=nq,p=f[p];
+		}//修改掉用到旧的q的地方
+	}
+	last=np;
+}
