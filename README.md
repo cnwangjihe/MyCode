@@ -19,6 +19,12 @@ All code by me.
 >
 >HH*.cpp   -- http://hihocoder.com/
 >
+>BZOJ*.cpp -- http://www.lydsy.com/JudgeOnline/
+>
+>CODE*.cpp -- https://cp.thusaac.org/
+>
+>ZOJ*.cpp  -- http://acm.zju.edu.cn/onlinejudge/
+>
 >#*.cpp    -- temp source code
 >
 >(eng).cpp -- UNKNOW source code
