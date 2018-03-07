@@ -7,22 +7,16 @@
 
 using namespace std;
 
-const int cx[] = {-1,-1,-1,0,0,1,1,1},
-		  cy[] = {-1,0,1,-1,1,-1,0,1};
-
-const int MAXN = 1009,
-		  MAXM = 10009,
+const int MAXN = 109,
+		  MAXM = MAXN,
 		  MAXP = MAXN,
-		  MAXE = MAXN*2+MAXM,
+		  MAXE = MAXN*3,
 		  INF  = 0x7fffffff;
 
 int _next[MAXE*2],_node[MAXE*2],_val[MAXE*2],_head[MAXP],_cost[MAXE*2];
 bool _in[MAXP];
-int from[MAXP],line[MAXP];
-long long dis[MAXP];
-int n,m,fp=0,S,T;
-long long ans=0;
-
+int from[MAXP],line[MAXP],dis[MAXP],v[MAXN];
+int n,m,fp=0,S,T,ans=0,sum=0;
 
 void _add(int a,int b,int v,int c)
 {
@@ -72,7 +66,7 @@ bool SPFA()
 	return (~from[T]);
 }
 
-long long _getcost()
+int _getcost()
 {
 	int flow=INF;
 	for (int i=T;i!=S;i=_node[from[i]^1])
@@ -80,29 +74,34 @@ long long _getcost()
 	for (int i=T;i!=S;i=_node[from[i]^1])
 		_val[from[i]]-=flow,_val[from[i]^1]+=flow;
 //	flowsum+=flow;
-	return dis[T]*(long long)flow;
+	return dis[T]*flow;
 		
 }
 
 int main()
 {
-	int v,l,r,c;
-	scanf("%d%d",&n,&m);
+	scanf("%d",&n);
 	memset(_head,-1,sizeof _head);
-	S=0,T=n+2;
+	S=0,T=n+1;
 	for (int i=1;i<=n;i++)
 	{
-		scanf("%d",&v);
-		_connect(i,i+1,INF-v,0);
+		scanf("%d",&v[i]);
+		sum+=v[i];
 	}
-	_connect(S,1,INF,0);
-	_connect(n+1,T,INF,0);
-	for (int i=0;i<m;i++)
+	sum/=n;
+	for (int i=1;i<=n;i++)
 	{
-		scanf("%d%d%d",&l,&r,&c);
-		_connect(l,r+1,INF,c);
+		_connect(i,i==n?1:i+1,INF,1);
+		_connect(i,i==1?n:i-1,INF,1);
+		if (v[i]-sum<0)
+			_connect(i,T,sum-v[i],0);
+		else
+		if (v[i]-sum>0)
+			_connect(S,i,v[i]-sum,0);
 	}
+//	_connect(S,1,INF,0);
+//	_connect(n,T,INF,0);
 	while (SPFA())
 		ans+=_getcost();
-	printf("%lld\n",ans);
+	printf("%d\n",ans);
 }
