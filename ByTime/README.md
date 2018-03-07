@@ -1,5 +1,6 @@
-## Sort By Time ##
-
+# MyCode #
+All code by me.
+## Some Tips ######
 >P*.cpp    -- https://www.luogu.org/ 
 >
 >*.cpp     -- http://smoj.nhedu.net/ 
@@ -17,3 +18,13 @@
 >JOY*.cpp  -- http://www.joyoi.cn/
 >
 >HH*.cpp   -- http://hihocoder.com/
+>
+>BZOJ*.cpp -- http://www.lydsy.com/JudgeOnline/
+>
+>CODE*.cpp -- https://cp.thusaac.org/
+>
+>ZOJ*.cpp  -- http://acm.zju.edu.cn/onlinejudge/
+>
+>#*.cpp    -- temp source code
+>
+>(eng).cpp -- UNKNOW source code
