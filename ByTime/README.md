@@ -27,4 +27,4 @@ All code by me.
 >
 >#*.cpp    -- temp source code
 >
->(eng).cpp -- UNKNOW source code
+>(eng).cpp -- unknown source code
