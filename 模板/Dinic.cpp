@@ -13,9 +13,9 @@ struct Tline{
 };
 
 const int MAXV = 10000006,
-          MAXN = 206,
-          MAXM = 406,
-          INF = 2000000000;
+		  MAXN = 206,
+		  MAXM = 406,
+		  INF = 2000000000;
 
 int n,m,a,b,v,Min,ans=0,fp=0;
 Tline connect[MAXM];

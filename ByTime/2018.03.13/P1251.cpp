@@ -92,15 +92,15 @@ int main()
 	}
 	scanf("%d%d%d%d%d",&p,&m,&f,&t,&s);
 	for (int i=1;i<=n;i++)
-    {
-        _connect(0,i,INF,p);
-        if (i+m<=n)
-        	_connect(i+n,i+m,INF,f);
-        if (i+t<=n)
-        	_connect(i+n,i+t,INF,s);
-        if (i+1<=n)
-        	_connect(i,i+1,INF,0);
-    }
+	{
+		_connect(0,i,INF,p);
+		if (i+m<=n)
+			_connect(i+n,i+m,INF,f);
+		if (i+t<=n)
+			_connect(i+n,i+t,INF,s);
+		if (i+1<=n)
+			_connect(i,i+1,INF,0);
+	}
 	while (SPFA())
 		ans+=_getcost();
 	printf("%lld\n",ans);

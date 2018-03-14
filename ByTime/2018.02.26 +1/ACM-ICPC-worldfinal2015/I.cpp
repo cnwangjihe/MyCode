@@ -30,31 +30,31 @@ char _getch()
 
 int main()
 {
-    scanf("%d%d%d%d%d%d",&n,&w,&u,&v,&t1,&t2);
-    cnt=0;
-    for (int i=1;i<=n;i++)
-    {
-    	c=_getch();
-        scanf("%d",&m);
-        for (int j=0;j<m;j++)
-        {
-            scanf("%d%d",&len,&pos);
-            if (c=='E')
-                pos=-pos;
-            vc[cnt++]=(make_pair((double)pos/u-(double)w*i/v,1));
-            vc[cnt++]=(make_pair((double)(pos+len)/u-(double)w*(i-1)/v,-1));
-        }
-    }
-    vc[cnt++]=(make_pair(LFINF,1));
-    vc[cnt++]=(make_pair(t1,0));
-    sort(vc,vc+cnt);
-    int tmp=0;
-    for (int i=0;i<cnt-1;i++)
-    {
-        tmp+=vc[i].second;
-        if (tmp==0 && vc[i].first>=t1)
-            ans=max(ans,min((double)t2,vc[i+1].first)-vc[i].first);
-    }
-    printf("%0.8f\n",ans);
-    return 0;
+	scanf("%d%d%d%d%d%d",&n,&w,&u,&v,&t1,&t2);
+	cnt=0;
+	for (int i=1;i<=n;i++)
+	{
+		c=_getch();
+		scanf("%d",&m);
+		for (int j=0;j<m;j++)
+		{
+			scanf("%d%d",&len,&pos);
+			if (c=='E')
+				pos=-pos;
+			vc[cnt++]=(make_pair((double)pos/u-(double)w*i/v,1));
+			vc[cnt++]=(make_pair((double)(pos+len)/u-(double)w*(i-1)/v,-1));
+		}
+	}
+	vc[cnt++]=(make_pair(LFINF,1));
+	vc[cnt++]=(make_pair(t1,0));
+	sort(vc,vc+cnt);
+	int tmp=0;
+	for (int i=0;i<cnt-1;i++)
+	{
+		tmp+=vc[i].second;
+		if (tmp==0 && vc[i].first>=t1)
+			ans=max(ans,min((double)t2,vc[i+1].first)-vc[i].first);
+	}
+	printf("%0.8f\n",ans);
+	return 0;
 }

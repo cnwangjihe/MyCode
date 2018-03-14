@@ -70,8 +70,8 @@ LL dfs(int i,int j,int k)
 	if (~f[i][j][k])
 		return f[i][j][k];
 	f[i][j][k]=0;
-    if (i==j&&j==k&&k==0)
-    {
+	if (i==j&&j==k&&k==0)
+	{
 		f[i][j][k] = 1;
 		return 1;
 	}

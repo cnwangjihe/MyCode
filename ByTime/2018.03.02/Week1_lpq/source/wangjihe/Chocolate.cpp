@@ -20,11 +20,11 @@ int main()
 	while (scanf("%d",&c) && c)
 	{
 		scanf("%d%d",&n,&m);
-        if(!n && !m)
+		if(!n && !m)
 		{
-            printf("1.000\n");
-            continue;
-        }
+			printf("1.000\n");
+			continue;
+		}
 		if(m>c || m>n || ((m+n)&1))
 		{
 			printf("0.000\n");

@@ -143,7 +143,7 @@ int main()
 		{
 			printf("%d\n",get_min(root));
 		}
-	    debug();
+		debug();
 	}
 	return 0;
 }

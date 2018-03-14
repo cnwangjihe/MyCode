@@ -9,7 +9,7 @@
 using namespace std;
 
 const int MAXV = 10000006,
-          MAXN = 406;
+		  MAXN = 406;
 
 int head[MAXN],v[MAXN],node[MAXN],next[MAXN];
 bool f[MAXN];

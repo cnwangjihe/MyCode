@@ -7,8 +7,8 @@
 
 using namespace std;
 
-const int MAXN = 5009+50009,
-		  MAXM = 50000*4,
+const int MAXN = 109,
+		  MAXM = MAXN*MAXN,
 		  INF  = 1000000009;
 
 int _next[MAXM*2],_node[MAXM*2],_head[MAXN],_val[MAXM*2];
@@ -77,27 +77,58 @@ int DFS(int u,int Min)
 	return ans;
 }
 
+void _out()
+{
+	for (int i=1;i<=n;i++)
+		if (vis[i])
+			printf("%d ",i); 
+	putchar('\n');
+	for (int i=1;i<=m;i++)
+		if (vis[i+n])
+			printf("%d ",i);
+	putchar('\n');
+	return ;
+}
+
 int main()
 {
 	memset(_head,-1,sizeof _head);
 	int a,b,v;
 	scanf("%d%d",&n,&m);
 	S=0,T=n+m+1;
+	char tools[10000];
+	int ulen=0,tool;
 	for (int i=1;i<=n;i++)
 	{
 		scanf("%d",&v);
+		ans+=v;
 		_connect(S,i,v);
+		memset(tools,0,sizeof tools);
+		cin.getline(tools,10000);
+		ulen=0;
+		while (sscanf(tools+ulen,"%d",&tool)==1)
+		{
+		//  cerr << tool << endl;
+			_connect(i,tool+n,INF);
+			if (tool==0)
+				ulen++;
+			else {
+				while (tool) {
+					tool/=10;
+					ulen++;
+				}
+			}
+			ulen++;
+		}
 	}
 	for (int i=1;i<=m;i++)
 	{
-		scanf("%d%d%d",&a,&b,&v);
-		_connect(a,i+n,INF);
-		_connect(b,i+n,INF);
+		scanf("%d",&v);
 		_connect(i+n,T,v);
-		ans+=v;
 	}
 	while (BFS())
 		ans-=DFS(S,INF);
+	_out();
 	printf("%d\n",ans);
 	return 0;
 }

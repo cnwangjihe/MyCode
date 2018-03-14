@@ -86,7 +86,7 @@ void _out()
 		for (int j=_head[i];~j;j=_next[j])
 			if ((j&1)+_val[j]==0)
 			{
-			//	cerr << _node[j] << '\n';
+			//  cerr << _node[j] << '\n';
 				a[_node[j]-m].push_back(i);
 				break;
 			}

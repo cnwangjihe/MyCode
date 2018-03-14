@@ -41,7 +41,7 @@ int main()
 			}
 		}
 		
-        cout << p[n][(1<<m)-1] << endl;
+		cout << p[n][(1<<m)-1] << endl;
 		cin >> n >> m;
 	}
 }
