@@ -11,7 +11,7 @@ const int MAXN = 109;
 
 int n,m,lim,ans;
 int mp[MAXN][MAXN];
-int f[(1<<10)][MAXN];
+int f[MAXN][(1<<11)];
 
 int getcost(int k,int p)
 {
@@ -33,8 +33,8 @@ int main()
 	scanf("%d",&ttt);
 	for (;ttt--;)
 	{
-		ans=0x7fffffff;
 		scanf("%d%d%d",&n,&m,&lim);
+		ans=lim+1;
 		for (int i=1;i<=n;i++)
 			for (int j=1;j<=m;j++)
 				scanf("%d",&mp[i][j]);
@@ -67,7 +67,7 @@ int main()
 			sum=0;
 			for (int j=1;j<=n;j++)
 			{
-				t=0;
+				t1=0,t2=0;
 				for (int k=1;k<=m;k++)
 					if (mp[i][k]!=mp[j][k])
 						t++;
