@@ -15,12 +15,14 @@ const int MAXN = 50009,
 Ttmp tmp[MAXN];
 int _head[MAXN],_next[MAXM],_node[MAXM],_val[MAXM];
 int pos[MAXN],np[MAXN],army[MAXN];
+long long r[MAXN];
 int jump[MAXN][17];
 long long sum[MAXN][17];
-bool _in[MAXN],used[MAXN],save[MAXN];
+int _in[MAXN];
 int n,m,c,fp=0;
 
-bool _cmp(Ttmp a,Ttmp b){return a.v<b.v;}
+bool _cmp1(Ttmp a,Ttmp b){return a.v>b.v;}
+bool _cmp2(Ttmp a,Ttmp b){return a.v<b.v;}
 
 void _connect(int a,int b,int v)
 {
@@ -61,51 +63,63 @@ bool dfs(int u)
 	for (int i=_head[u];~i;i=_next[i])
 		if (_node[i]!=jump[u][0])
 			t&=dfs(_node[i]),f=1;
-	save[u]=(t&f);
-	return _in[u]|(t&f);
+//	if (u==4)
+//		cerr << t << '*' << f << endl; 
+	if ((t&f)&_in[u])
+	{
+		tmp[c].i=army[u];
+		tmp[c++].v=r[army[u]];
+	}
+	return _in[u]|=(t&f);
 }
 
 bool _check(long long t)
 {
 	c=0;
 	memset(_in,0,sizeof _in);
-	memset(used,0,sizeof used);
-	memset(save,0,sizeof save);
 	for (int i=1;i<=m;i++)
 	{
-		np[i]=up(pos[i],t,tmp[i].v);
-		tmp[i].i=i;
-		if (!_in[np[i]] || tmp[i].v<tmp[army[np[i]]].v)
-			army[np[i]]=i;
-		_in[np[i]]=1;
-	}
-	dfs(1);
-//	for (int i=1;i<=m;i++)
-//		cerr << np[i] << ' ';
-//	cerr << '\n';
-	sort(tmp+1,tmp+1+m,_cmp);
-//	for (int i=1;i<=m;i++)
-//		cerr << tmp[i].i << ':' << tmp[i].v << ' ';
-//	cerr << '\n';
-	int j=m;
-	for (int i=_head[1];~i;i=_next[i])
-	{
-		if (save[_node[i]])
-			continue;
-	//	cerr << _node[i] << ' ' << army[_node[i]] << '\n';
-		while (j && used[tmp[j].i]) j--;
-		if (_in[_node[i]] && !used[army[_node[i]]])
-			used[army[_node[i]]]=1;
-		else
+		np[i]=up(pos[i],t,r[i]);
+		if (_in[np[i]])
 		{
-			if (j && tmp[j].v>=_val[i])
+			if (r[army[np[i]]]>r[i])
 			{
-				used[tmp[j].i]=1;
-				j--;
+				tmp[c].i=army[np[i]],
+				tmp[c++].v=r[army[np[i]]];
+				army[np[i]]=i;
 			}
 			else
-				return 0;
+			{
+				tmp[c].i=i;
+				tmp[c++].v=r[i];
+			}
 		}
+		else
+		{
+			_in[np[i]]=1;
+			army[np[i]]=i;
+		}
+//		cerr << up(pos[i],t,r[i]) << ' ';
+	}	
+//	cerr << '\n';
+	dfs(1);
+//	for (int i=1;i<=n;i++)
+//		cerr << _in[i] << ' ';
+//	cerr << '\n';
+//	for (int i=0;i<c;i++)
+//		cerr << tmp[i].i << ':' << tmp[i].v << ' ';
+//	cerr << '\n';
+	sort(tmp,tmp+c,_cmp2);
+	int j=0;
+	for (int i=_head[1];~i;i=_next[i])
+	{
+		if (_in[_node[i]])
+			continue;
+		while (j<c && tmp[j].v<_val[i])
+			j++;
+		if (j==c)
+			return 0;
+		j++;
 	}
 	return 1;
 }
@@ -115,7 +129,7 @@ void _init()
 	c=0;
 	for (int i=_head[1];~i;i=_next[i])
 		tmp[c].i=_node[i],tmp[c++].v=_val[i];
-	sort(tmp,tmp+c,_cmp);
+	sort(tmp,tmp+c,_cmp1);
 	_head[1]=-1;
 	for (int i=0;i<c;i++)
 		_connect(1,tmp[i].i,tmp[i].v);
@@ -126,7 +140,7 @@ void _init()
 int main()
 {
 	freopen("P1084.in","r",stdin);
-	freopen("P1084.out","w",stdout);
+    freopen("P1084.out","w",stdout);
 	memset(_head,-1,sizeof _head);
 	int a,b,v;
 	scanf("%d",&n);
@@ -148,7 +162,6 @@ int main()
 			r=mid;
 		else
 			l=mid;
-//		cerr << mid << "----------------------\n";
 	}
 	printf("%lld\n",r);
 	return 0;
