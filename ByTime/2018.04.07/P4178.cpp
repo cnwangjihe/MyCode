@@ -78,7 +78,7 @@ int calc(int u,int d)
 int solve(int u,int size)
 {
 	int v;
-	root=u;
+	root=n+2;
 	_getroot(u,0,size);
 	u=root;
 //	cerr << u << endl;
@@ -102,6 +102,7 @@ int main()
 //	{
 		scanf("%d",&n);
 		fp=0;
+		f[n+2]=n*3;
 		memset(done,0,sizeof done);
 		memset(_head,-1,sizeof _head);
 		for (int i=1;i<n;i++)
