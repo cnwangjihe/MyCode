@@ -14,11 +14,11 @@ int n,t;
 int main()
 {
 	srand(time(0));
-	int t=10;
+	int t=5;
 	freopen("2443.in","w",stdout);
 	while (t--)
 	{
-		int n=1000;
+		int n=100000;
 		printf("%d\n",n);
 		printf("%d %d\n",0,rand()%2?1:-1);
 		for (int i=2;i<=n;i++)
