@@ -7,16 +7,18 @@
 
 using namespace std;
 
-const int MAXN = 109,
-		  MAXM = MAXN*MAXN,
-		  INF  = 1000000009;
+const int MAXN = 34,
+		  MAXM = 1009;
+const long long INF  = 100000000000009ll;
 
-int _next[MAXM*2],_node[MAXM*2],_head[MAXN],_val[MAXM*2];
+int _next[MAXM*2],_node[MAXM*2],_head[MAXN];
+long long _val[MAXM*2];
 bool vis[MAXN];
 int line[MAXN],dis[MAXN];
-int fp=0,S,T,n,m,ans=0;
+int fp=0,S,T,n,m;
+long long ans=0;
 
-void _add(int a,int b,int v)
+void _add(int a,int b,long long v)
 {
 	_next[fp]=_head[a];
 	_node[fp]=b;
@@ -25,10 +27,10 @@ void _add(int a,int b,int v)
 	return ;
 }
 
-void _connect(int a,int b,int v)
+void _connect(int a,int b,long long v)
 {
 	_add(a,b,v);
-	_add(b,a,0);
+	_add(b,a,0ll);
 	return ;
 }
 
@@ -55,10 +57,11 @@ bool BFS()
 	return vis[T];
 }
 
-int DFS(int u,int Min)
+long long DFS(int u,long long Min)
 {
 //  cerr << u <<endl;
-	int v,tmp,ans=0;
+	int v;
+	long long tmp,ans=0;
 	if (u==T)
 		return Min;
 	for (int i=_head[u];~i;i=_next[i])
@@ -77,58 +80,21 @@ int DFS(int u,int Min)
 	return ans;
 }
 
-void _out()
-{
-	for (int i=1;i<=n;i++)
-		if (vis[i])
-			printf("%d ",i); 
-	putchar('\n');
-	for (int i=1;i<=m;i++)
-		if (vis[i+n])
-			printf("%d ",i);
-	putchar('\n');
-	return ;
-}
-
 int main()
 {
 	memset(_head,-1,sizeof _head);
-	int a,b,v;
 	scanf("%d%d",&n,&m);
-	S=0,T=n+m+1;
-	char tools[10000];
-	int ulen=0,tool;
-	for (int i=1;i<=n;i++)
+	S=1,T=n;
+	int a,b,v;
+	long long k=1007;
+	for (int i=0;i<m;i++)
 	{
-		scanf("%d",&v);
-		ans+=v;
-		_connect(S,i,v);
-		memset(tools,0,sizeof tools);
-		cin.getline(tools,10000);
-		ulen=0;
-		while (sscanf(tools+ulen,"%d",&tool)==1)
-		{
-		//  cerr << tool << endl;
-			_connect(i,tool+n,INF);
-			if (tool==0)
-				ulen++;
-			else {
-				while (tool) {
-					tool/=10;
-					ulen++;
-				}
-			}
-			ulen++;
-		}
-	}
-	for (int i=1;i<=m;i++)
-	{
-		scanf("%d",&v);
-		_connect(i+n,T,v);
+		scanf("%d%d%d",&a,&b,&v);
+		_connect(a,b,v*k+1);
 	}
 	while (BFS())
-		ans-=DFS(S,INF);
-	_out();
-	printf("%d\n",ans);
+		ans+=DFS(S,INF);
+	memset(vis,0,sizeof vis);
+	printf("%d %d\n",ans/k,ans%k);
 	return 0;
 }
