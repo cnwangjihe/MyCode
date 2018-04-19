@@ -1,11 +1,11 @@
 bool _cmp(int *r,int a,int b,int len)
 { return (r[a]==r[b] && r[a+len]==r[b+len]); }
 
-void _getrank(int *rank,int *sa,int n,int m)
+void _getrank(int n,int m)
 {
-	int j,p,*tmp=temp,*yu;
+	int j,p;
 	for (int i=0;i<m;i++) cnt[i]=0;
-	for (int i=0;i<n;i++) cnt[rank[i]]++;
+	for (int i=0;i<n;i++) cnt[rank[i]=s[i]-'a']++;
 	for (int i=1;i<m;i++) cnt[i]+=cnt[i-1];
 	for (int i=n-1;i>=0;i--) sa[--cnt[rank[i]]]=i;
 	for (j=1,p=1;p<n;m=p,j=j*2)
@@ -17,7 +17,7 @@ void _getrank(int *rank,int *sa,int n,int m)
 		for (int i=0;i<n;i++) cnt[rank[tmp[i]]]++;
 		for (int i=1;i<m;i++) cnt[i]+=cnt[i-1];
 		for (int i=n-1;i>=0;i--) sa[--cnt[rank[tmp[i]]]]=tmp[i];
-		yu=tmp;tmp=rank;rank=yu;
+		swap(tmp,rank);
 		rank[sa[0]]=0;
 		p=1;
 		for (int i=1;i<n;i++)
