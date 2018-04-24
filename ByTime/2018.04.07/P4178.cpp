@@ -58,6 +58,20 @@ void _getdeep(int u,int fa)
 	return ;
 }
 
+int _getsize(int u,int fa)
+{
+	int v;
+	s[u]=1;
+	for (int i=_head[u];~i;i=_next[i])
+	{
+		v=_node[i];
+		if (v==fa || done[v])
+			continue;
+		s[u]+=_getsize(v,u);
+	}
+	return s[u];
+}
+
 int calc(int u,int d)
 {
 	int ans=0;
@@ -81,6 +95,7 @@ int solve(int u,int size)
 	root=n+2;
 	_getroot(u,0,size);
 	u=root;
+	_getsize(u,0);
 //	cerr << u << endl;
 	done[u]=1;
 	ans[u]=calc(u,0);
