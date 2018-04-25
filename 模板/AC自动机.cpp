@@ -52,35 +52,35 @@ struct Tac
 		while (head<tail)
 		{
 			now=line[head++];
-			for (int i=0;i<26;i++) /*对now的每个子树建fail*/
+			for (int i=0;i<26;i++)
 			{
 				if (tree[now]._next[i])
 				{
 					u=tree[now]._next[i];
 					k=tree[now].fail;
-					while (!tree[k]._next[i]) k=tree[k].fail; /*fail到匹配或0*/
+					while (!tree[k]._next[i]) k=tree[k].fail;
 					tree[u].fail=tree[k]._next[i];
-					line[tail++]=u; /*并不会重复入队所以没有f*/ 
-				//	cerr << tree[u].fail <<' ';
+					line[tail++]=u;
+					cerr << now << ' ' << u << ' '<< tree[u].fail <<'\n';
 				}
 			}
-		}/*bfs跑kmp，然而常数非常大*/ 
+		}
 	}
-	int solve() /*tar==target*/
+	int solve()
 	{
-		int root=1,ch,ans=0,tmp;/*root==now*/
+		int root=1,ch,ans=0,tmp;
 		for (int i=0;i<tlen;i++)
 		{
 			ch=int(tar[i])-int('a');
 			while (root && (!tree[root]._next[ch])) root=tree[root].fail;
 			if (root!=0) root=tree[root]._next[ch];
 				else root=1;
-			tmp=root; /*以防万一*/
+			tmp=root;
 			while (tmp!=1) 
 			{
 				if (tree[tmp].f==-1) break;
 				ans+=tree[tmp].f;
-				tree[tmp].f=-1; /*找过就不用再来了(小心清零问题)*/
+				tree[tmp].f=-1;
 				tmp=tree[tmp].fail;
 			}
 		}
@@ -92,8 +92,8 @@ int ttt,n;
 
 int main()
 {
-	scanf("%d",&ttt);
-	for (;ttt>0;ttt--)
+//	scanf("%d",&ttt);
+//	for (;ttt>0;ttt--)
 	{
 		ac.clean();
 		scanf("%d",&n);
