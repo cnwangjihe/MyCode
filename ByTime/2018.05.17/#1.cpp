@@ -33,7 +33,7 @@ void dfs(int k,int n)
 
 int main()
 {
-	for (int n=0;n<=7;n++)
+	for (int n=7;n<=7;n++)
 	{
 		st=s;
 		dfs(0,n);
