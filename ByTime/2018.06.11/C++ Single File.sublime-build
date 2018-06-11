@@ -1,0 +1,42 @@
+{
+	"encoding": "utf-8",
+	"working_dir": "$file_path",
+//	"shell_cmd": "g++ -Wall -std=c++11 \"$file_name\" -o \"$file_base_name\"",
+	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+	"selector": "source.c++",
+
+	"variants":   
+	[
+		{
+			"name": "Only Build",
+			"shell_cmd": "g++ \"$file\" -o \"$file_base_name\" -g"
+		},
+		{
+			"name": "Run",
+			"shell_cmd": "g++ \"$file\" -o \"$file_base_name.exe\" -g && start cmd /c \"\"${file_path}/${file_base_name}.exe\" & pause\""
+		},  
+		{
+			"name": "Run Full Stack",  
+			"shell_cmd": "g++ \"$file\" -o \"$file_base_name.exe\" -Wl,--stack=268435456 -Wall && start cmd /c \"\"${file_path}/${file_base_name}.exe\" & pause\""  
+		},  
+		{
+			"name": "Run with o2 && Full Stack",  
+			"shell_cmd": "g++ \"$file\" -o \"$file_base_name.exe\" -Wl,--stack=268435456 -O2 -Wall && start cmd /c \"\"${file_path}/${file_base_name}.exe\" & pause\""  
+		},
+		{
+			"name": "Only Build in Ubuntu",
+			"working_dir": "$file_path",
+			"shell_cmd" : "ubuntu run \"g++ ${file_name} -o ${file_base_name}.lexe \"",
+		},
+		{
+			"name": "Run in Ubuntu",
+			"working_dir": "$file_path",
+			"shell_cmd" : "ubuntu run \"g++ ${file_name} -o ${file_base_name}.lexe -Wall \" && start cmd /c \"ubuntu run \"./${file_base_name}.lexe\" & pause \"",
+		},
+		{
+			"name": "Run in Ubuntu with o2",
+			"working_dir": "$file_path",
+			"shell_cmd" : "ubuntu run \"g++ ${file_name} -o ${file_base_name}.lexe -Wall -Wno-unused-result -O2 \" && start cmd /c \"ubuntu run \"./${file_base_name}.lexe\" & pause \"",
+		}
+	]
+} 
