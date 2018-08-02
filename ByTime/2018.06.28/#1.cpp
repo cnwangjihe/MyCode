@@ -15,6 +15,14 @@ string getname()
 	return ans;
 }
 
+string getname(int len)
+{
+	string ans;
+	for (int i=0;i<len;i++)
+		ans+=char(c[rand()%n]);
+	return ans;
+}
+
 map <int,int>mmm;
 
 int main()

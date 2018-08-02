@@ -185,6 +185,10 @@ inline long long query()
 int main()
 {
 	n = read();
+	int tmpn=0;
+	for (int i=0;i<n;i++)
+		tmpn++;
+	n=tmpn;
 	for (int i = 1; i <= n; i++)
 	{
 		x = read(),	y = read(), z = read();
