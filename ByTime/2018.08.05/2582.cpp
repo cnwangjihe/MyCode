@@ -19,40 +19,6 @@ long long ans;
 int a[MAXN];
 int n,fp=1;
 
-/*
-int find(int l,int r,int v)
-{
-	l--;
-	int mid;
-	while (l+1<r)
-	{
-		mid=(l+r)/2;
-		if (a[mid]<v)
-			l=mid;
-		else
-			r=mid;
-	}
-	return l;
-}
-
-void solve(int l,int r)
-{
-	if (r-l<2)
-
-	int mid=(l+r)/2;
-	for (int i=mid+1;i<=r;i++)
-		v[i]=a[i]^a[mid];
-	sort(v+mid+1,v+r+1);
-	for (int i=l;i<mid;i++)
-	{
-		p=find(mid+1,r,a[i]^a[mid]);
-		ans+=p-l+1;
-	}
-	solve(l,mid);
-	solve(mid+1,r);
-}
-*/
-
 void modify(int k,int u,int v,int d,int val)
 {
 	t[u].size[k]+=val;
