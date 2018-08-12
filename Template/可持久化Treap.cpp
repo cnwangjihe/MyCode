@@ -121,7 +121,7 @@ struct Treap
 	void print(int u)
 	{
 		if (!u)
-		return ;	
+			return ;	
 		print(t[u].lc);
 		putchar(t[u].v);
 		if (t[u].v==(int)'c')
