@@ -33,12 +33,76 @@ void print(long long a)
 	return ;
 }
 
-bool _cmp(long long a,long long b) {return a<b;}
+bool _cmp(long long a,long long b) {return a>b;}
+
+void solve1()
+{
+	sort(b,b+k);
+	for (int i=0;i<k;i++)
+	{
+		t=Getv(b[i]);
+	//	cerr << t << endl;
+		if (cnt[b[i]]==k1 && cnt[t]==k0)
+		{
+			print(b[i]);
+			done=1;
+			break;
+		}
+	}
+	if (!done)
+		printf("-1\n");
+	return ;
+}
+
+void solve2()
+{
+	sort(b,b+k,_cmp);
+	for (int i=0;i<k;i++)
+	{
+		t=Getv(b[i]);
+	//	cerr << t << endl;
+		if (cnt[b[i]]==k0 && cnt[t]==k1)
+		{
+			print(t);
+			done=1;
+			break;
+		}
+	}
+	if (!done)
+		printf("-1\n");
+	return ;
+}
+
+bool dfs(long long stat,int k)
+{
+	if (k==m)
+	{
+//	cerr << stat <<' ' << k << endl;
+		long long t=Getv(stat);
+		if (cnt[stat]==0 && cnt[t]==0)
+		{
+			print(stat);
+			return 1;
+		}
+		return 0;
+	}
+	if (!dfs(stat<<1ll,k+1))
+		return dfs((stat<<1ll)+1ll,k+1);
+	else
+		return 1;
+}
+
+void solve3()
+{
+	if (!dfs(0,0))
+		printf("-1\n");
+	return ;
+}
 
 int main()
 {
-//	freopen("2615.in","r",stdin);
-//	freopen("2615.out","w",stdout);
+	freopen("2615.in","r",stdin);
+	freopen("2615.out","w",stdout);
 	int ttt;
 	char ch;
 	scanf("%d",&ttt);
@@ -59,22 +123,15 @@ int main()
 			cnt[a]++;
 			b[k++]=a;
 		}
-		sort(b,b+k,_cmp);
-		for (int i=0;i<k;i++)
+		if (k1)
+			solve1();
+		else
 		{
-			t=Getv(b[i]);
-			cerr << t << endl;
-			if (cnt[b[i]]==k1 && cnt[t]==k0)
-			{
-				print(b[i]);
-				done=1;
-				break;
-			}
+			if (k0)
+				solve2();
+			else
+				solve3();
 		}
-		for (int i=0;i<k;i++)
-			cnt[b[i]]=0;
-		if (!done)
-			printf("-1\n");
 	}
 	return 0;
 }
