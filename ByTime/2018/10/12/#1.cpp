@@ -1,20 +1,22 @@
 #include <iostream> 
-#include <string> 
 using namespace std; 
+int fun(int n, int fromPos, int toPos) { 
+ int t, tot; 
+    if (n == 0) 
+     return 0; 
+    for (t = 1; t <= 3; t++) 
+        if (t != fromPos && t != toPos) 
+            break; 
+    tot = 0; 
+    tot += fun(n - 1, fromPos, t); 
+    tot++; 
+    tot += fun(n - 1, t, toPos); 
+    return tot; 
+} 
+ 
 int main() { 
- int len, maxlen; 
- string s, ss; 
- maxlen = 0; 
- do { 
-     cin >> ss; 
-     len = ss.length(); 
-     if (ss[0] == '#') 
-   break; 
-     if (len > maxlen) { 
-      s = ss; 
-      maxlen = len; 
-     } 
- } while (true); 
- cout << s << endl; 
+    int n; 
+    cin >> n; 
+    cout << fun(n, 1, 3) << endl; 
     return 0; 
 } 
