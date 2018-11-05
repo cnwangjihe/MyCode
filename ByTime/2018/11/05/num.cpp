@@ -51,6 +51,6 @@ int main()
 	solve();
 	for (int i=1;i<=n;i++)
 		Max=max(ans[i],Max);
-	printf("%d\n",Max-1);
+	printf("%d\n",max(0,Max-1));
 	return 0;
 }
