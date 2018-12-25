@@ -83,6 +83,8 @@ void fft(complex *a,int len,int type)
 
 int main()
 {
+	freopen("P3803_NTT.in","r",stdin);
+	freopen("P3803_FFT.out","w",stdout);
 	scanf("%d%d",&n,&m);
 	for (int i=0;i<=n;i++)
 		scanf("%lf",&a[i].x);
