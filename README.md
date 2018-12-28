@@ -25,6 +25,8 @@ All code by me.
 >
 >ZOJ*.cpp  -- http://acm.zju.edu.cn/onlinejudge/
 >
+>SP*.cpp   -- https://www.spoj.com/
+>
 >#*.cpp    -- temp source code
 >
 >(eng).cpp -- unknown source code
