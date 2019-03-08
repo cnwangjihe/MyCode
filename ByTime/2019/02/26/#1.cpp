@@ -1,81 +1,74 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#define mkp make_pair
+#define fi first
+#define se second
 using namespace std;
 
-const int mx=1e5+10;
-
-int n,m;
-int a[mx];
-struct Tq
+typedef long long ll;
+typedef pair<ll,int> pii;
+const int N=4e6+10;
+int n,K,top,pre[N],nex[N];
+bool fg[N];
+ll ans,a[N],b[N];
+priority_queue<pii>q;
+char nc() 
 {
-	int sx,sy,tx,ty;
-};
-Tq q[mx];
-
-inline int read()
+    static char ch[100000],*s=ch,*t=ch;
+    return s==t&&(t=(s=ch)+fread(ch,1,100000,stdin),s==t)?-1:*s++;
+}
+ll read()
 {
-	char ch=0;
-	int w=0,x=0;
-	while(!isdigit(ch)) w|=(ch=='-'),ch=getchar();
-	while(isdigit(ch)) x=x*10+ch-'0',ch=getchar();
-	return w?-x:x;
+	ll ret=0;char c=nc();
+	while(!isdigit(c)) c=nc();
+	while(isdigit(c)) ret=ret*10+(c^48),c=nc();
+	return ret;
 }
 
-int rmq[20][mx],lg[mx];
-
-void getrmq()
+void init()
 {
-	lg[0]=lg[1]=0;
-	for(int i=2;i<=n;i++) lg[i]=lg[i>>1]+1;
-	for(int i=1;i<=n;i++) rmq[0][i]=a[i];
-	for(int k=1;k<=17;k++)
-		for(int i=1;i+(1<<(k-1))<=n;i++)
-			rmq[k][i]=min(rmq[k-1][i],rmq[k-1][i+(1<<(k-1))]);
-}
-
-int askrmq(int l,int r)
-{
-	if(l>r) swap(l,r);
-	int k=lg[r-l+1];
-	return min(rmq[k][l],rmq[k][r-(1<<k)+1]);
-}
-
-int row(int x,int p1,int p2)
-{
-	return min(min(abs(p1-p2),p2+1),a[x]-p2+1);
-}
-
-void task1()
-{
-	getrmq();
-	int tmp=0,tmp2=0;
-	for(int i=0;i<m;i++)
+	n=read();K=read();
+	for(int i=1;i<=n;++i) a[i]=read(); --n;
+	for(int i=1;i<=n;++i)
 	{
-		int sx=q[i].sx,sy=q[i].sy,tx=q[i].tx,ty=q[i].ty;
-		int ans=1000000000;
-		for(int j=1;j<=n;j++)
-		{
-			tmp=askrmq(tx,j);
-			if(tmp<a[j]) continue;
-			tmp2=abs(sx-j)+abs(j-tx)+row(j,min(sy,askrmq(sx,j)),a[j])+row(tx,a[j],ty);
-			ans=min(ans,tmp2);
-		}
-		printf("%d\n",ans);
+		a[i]=a[i+1]-a[i];
+		if(a[i]>0) {ans+=a[i];if(b[top]>0) b[top]+=a[i]; else b[++top]=a[i];}
+		else{if(b[top]<=0) b[top]+=a[i]; else b[++top]=a[i];}
 	}
+	if(b[top]<=0) --top;
+	n=top;
+}
+void solve()
+{
+	if((n+1)>>1<=K){printf("%lld\n",ans);exit(0);}
+	K=((n+1)>>1)-K;
+	for(int i=1;i<=n;++i) b[i]=abs(b[i]),q.push(mkp(-b[i],i)),pre[i]=i-1,nex[i]=(i<n)?(i+1):0;
+	while(K--)
+	{
+		while(fg[q.top().se]) q.pop();
+		int x=q.top().se;ans+=q.top().fi;q.pop();
+		int u=pre[x],v=nex[x];fg[u]=fg[v]=1;
+		if(u && v)
+		{
+			pre[x]=pre[u];nex[x]=nex[v];
+			if(pre[x]) nex[pre[x]]=x;
+			if(nex[x]) pre[nex[x]]=x;
+			b[x]=b[u]+b[v]-b[x];q.push(mkp(-b[x],x));
+		}
+		else
+		{
+			pre[x]=pre[u];nex[x]=nex[v];
+			if(pre[x]) nex[pre[x]]=nex[x];
+			if(nex[x]) pre[nex[x]]=pre[x];
+			fg[x]=1;
+		}
+	}
+	printf("%lld\n",ans);
 }
 
 int main()
 {
-	freopen("f.in","r",stdin);
-	freopen("#1.out","w",stdout);
-	
-	n=read();
-	for(int i=1;i<=n;i++) a[i]=read();
-	m=read();
-	for(int i=0;i<m;i++)
-		q[i].sx=read(),q[i].sy=read(),q[i].tx=read(),q[i].ty=read();
-	
-	if(n<=2000 && m<=2000) return task1(),0;
-	
-	
+	freopen("b.in","r",stdin);
+	freopen("b.out","w",stdout);
+	init();solve();
 	return 0;
 }

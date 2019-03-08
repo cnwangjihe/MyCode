@@ -10,10 +10,10 @@ using namespace std;
 
 const int MAXN = 4000009,
 		  DINF = MAXN*2;
-const long long LLINF = 1000000000000000009ll;
+const long long LLDINF = 1000000000000000009ll;
 
 long long f[MAXN][2],a[MAXN],b[MAXN];
-int g[MAXN][2];
+int l[MAXN][2],r[MAXN][2];
 long long Max=0;
 int n,k;
 
@@ -33,30 +33,49 @@ inline long long read()
 	return x;
 }
 
-pair<long long,int> check(const long long& v)
+pair<long long,pair<int,int> > check(const long long& v)
 {
 	for (int i=1;i<=n;i++)
 		b[i]=a[i]-v;
-	f[0][0]=0,f[0][1]=-LLINF;
-	g[0][0]=0,g[0][1]=DINF;
+	f[0][0]=0,f[0][1]=-LLDINF;
+	l[0][0]=0,l[0][1]=DINF;
+	r[0][0]=0,r[0][1]=DINF;
 	for (int i=1;i<=n;i++)
 	{
 		f[i][0]=f[i-1][0];
-		g[i][0]=g[i-1][0];
+		l[i][0]=l[i-1][0];
+		r[i][0]=r[i-1][0];
 		f[i][1]=f[i-1][1];
-		g[i][1]=g[i-1][1];
-		if (f[i-1][0]-a[i]>f[i][1] || (f[i-1][0]+a[i]==f[i][1] && g[i-1][0]+1<g[i][1]))
+		l[i][1]=l[i-1][1];
+		r[i][1]=r[i-1][1];
+		if (f[i-1][0]-a[i]>f[i][1])
 		{
 			f[i][1]=f[i-1][0]-a[i];
-			g[i][1]=g[i-1][0]+1;
+			l[i][1]=l[i-1][0]+1;
+			r[i][1]=r[i-1][0]+1;
 		}
-		if (f[i-1][1]+b[i]>f[i][0] || (f[i-1][1]+b[i]==f[i][0] && g[i-1][1]+1<g[i][0]))
+		else if (f[i-1][0]-a[i]==f[i][1])
+		{
+			l[i][1]=min(l[i][1],l[i-1][0]+1);
+			r[i][1]=max(r[i][1],r[i-1][0]+1);
+		}
+		if (f[i-1][1]+b[i]>f[i][0])
 		{
 			f[i][0]=f[i-1][1]+b[i];
-			g[i][0]=g[i-1][1]+1;
+			l[i][0]=l[i-1][1]+1;
+			r[i][0]=r[i-1][1]+1;
+		}
+		else if (f[i-1][1]+b[i]==f[i][0])
+		{
+			l[i][0]=min(l[i][0],l[i-1][1]+1);
+			r[i][0]=min(r[i][0],r[i-1][1]+1);
 		}
 	}
-	return make_pair(f[n][0],g[n][0]/2);
+	if (f[n][1]>f[n][0])
+		f[n][0]=f[n][1],l[n][0]=l[n][1],r[n][0]=r[n][1];
+	else if (f[n][1]==f[n][0])
+		l[n][0]=min(l[n][0],l[n][1]),r[n][0]=min(r[n][0],r[n][1]);
+	return make_pair(f[n][0],make_pair(l[n][0]/2,r[n][0]/2));
 }
 
 int main()
@@ -66,18 +85,22 @@ int main()
 	scanf("%d%d",&n,&k);
 	for (int i=1;i<=n;i++)
 		a[i]=read(),Max=max(Max,a[i]);
-	long long l=0,r=Max+2,mid,ans=0;
-	pair<long long,int> tmp;
+	long long l=0,r=Max+3,mid;
+	long long ans=0;
+	pair<long long,pair<int,int> > tmp;
+	tmp=check(0);
+	if (tmp.second.first<=k)
+		return printf("%lld\n",tmp.first),0;
 	while (l+1<r)
 	{
-		mid=(l+r)/2ll;
+		mid=(l+r)/2;
 		tmp=check(mid);
-		if (tmp.second>k)
+		if (tmp.second.first>k)
 			l=mid;
 		else
 		{
 			r=mid;
-			ans=tmp.first+tmp.second*mid;
+			ans=(tmp.first+min(tmp.second.second,k)*mid);
 		}
 	}
 	printf("%lld\n",ans);

@@ -5,3 +5,5 @@
 *.lexe
 *.pyc
 *.o
+*.ans
+Contest/
