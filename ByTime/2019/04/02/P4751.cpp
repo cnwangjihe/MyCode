@@ -281,7 +281,6 @@ int main()
 	dfs2(1,1);
 //	cerr << "f**k2\n";
 	dfs3(1);
-	IO.prints("f**k");
 //	cerr << "f**k3\n";
 //	for (int i=1;i<=n;i++)
 //		cerr << i << ' ' << bot[i] << ' ' << w[i] << '\n';

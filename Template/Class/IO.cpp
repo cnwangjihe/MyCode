@@ -9,16 +9,8 @@ public:
 	~IO(){flush();}
 	#ifndef DEBUG
 		inline char getchar(){return rp1==rp2&&(rp2=(rp1=rbuf)+fread(rbuf,1,100000,stdin),rp1==rp2)?-1:*rp1++;}
-		inline void putchar(char c){(wp-wbuf==100000)?(flush()):(void)0;*wp++=c;}
+		inline void putchar(char c){(wp-wbuf==100000)?(flush()):void();*wp++=c;}
 	#endif
-	
-	template<typename Number> void print(Number x)
-	{
-		_print(x);
-		#ifdef DEBUG
-			flush();
-		#endif
-	}
 	inline void prints(const char *s)
 	{
 		int n=strlen(s);
@@ -33,7 +25,31 @@ public:
 			putchar(s[i]);
 		return ;
 	}
-	template<typename Number> void _print(Number x)
+	inline int scans(char *s,int (*check)(int c)=isalnum)
+	{
+		int n=0;short c=getchar();
+		while (!check(c) && (~c))
+			c=getchar();
+		if (!~c)
+			return 0;
+		do {s[n++]=c,c=getchar();}
+			while (check(c));
+		s[n]='\0';
+		return n;
+	}
+	inline int scans(string &s,int (*check)(int c)=isalnum)
+	{
+		int n=0;short c=getchar();
+		s="";
+		while (!check(c) && (~c))
+			c=getchar();
+		if (!~c)
+			return 0;
+		do {s+=c,c=getchar();n++;}
+			while (check(c));
+		return n;
+	}
+	template<typename Number> void print(Number x)
 	{
 		if (x<0)
 			putchar('-'),x=-x;
@@ -41,22 +57,24 @@ public:
 			print(x/10);
 		putchar(x%10+48);
 	}
-	template<typename Number> void scan(Number &x)
+	template<typename Number> int scan(Number &x)
 	{
-		bool f=0;x=0;char c=getchar();
-		while (!isdigit(c))
+		bool f=0;x=0;short c=getchar();
+		while (!isdigit(c) && (~c))
 			f|=(c=='-'),c=getchar();
+		if (!~c)
+			return 0;
 		do {x=x*10+c-48,c=getchar();}
 			while (isdigit(c));
 		x=(f?x*-1:x);
-		return ;
+		return 1;
 	}
 	inline void println(){putchar('\n');}
 	#if __cplusplus >= 201103L
 		template<typename Number,typename... Numbers>
 		inline void print(Number x,Numbers... X) {print(x),putchar(' '),print(X...);}
 		template<typename Number,typename... Numbers>
-		inline void scan(Number &x,Numbers &... X) {scan(x),scan(X...);}
+		inline int scan(Number &x,Numbers &... X) {return scan(x)+scan(X...);}
 	#else
 		#warning Please use c++11 to enable all features of IO
 	#endif
