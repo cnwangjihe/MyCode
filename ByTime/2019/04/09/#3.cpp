@@ -1,16 +1,23 @@
+#include <bits/stdc++.h>
+
+using namespace std;
 
 class IO
 {
 private:
 	char rbuf[100000],*rp1=rbuf,*rp2=rbuf;
 	char wbuf[100000],*wp=wbuf;
+	IO(){}
+	struct ObjectCreator{ObjectCreator(){IO::GetInstance();}};
+	static ObjectCreator _oc;
 public:
+	static IO &GetInstance(){static IO Instance;return Instance;}
 	inline void flush() {fwrite(wbuf,1,wp-wbuf,stdout);wp=wbuf;}
 	~IO(){flush();}
-	#ifndef DEBUG
+//	#ifndef DEBUG
 		inline char getchar(){return rp1==rp2&&(rp2=(rp1=rbuf)+fread(rbuf,1,100000,stdin),rp1==rp2)?-1:*rp1++;}
 		inline void putchar(char c){(wp-wbuf==100000)?(flush()):void();*wp++=c;}
-	#endif
+//	#endif
 	inline void print(char c) {putchar(c);}
 	inline void print(const char *s)
 	{
@@ -79,4 +86,18 @@ public:
 	#else
 		#warning Please use c++11 to enable all features of IO
 	#endif
-}IO;
+};
+
+IO &IO=IO::GetInstance();
+
+void Die()
+{
+	exit(0);
+}
+
+int main()
+{
+	IO.print("awsl\n");
+	Die();
+	return 0;
+}

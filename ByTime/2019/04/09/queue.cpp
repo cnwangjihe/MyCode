@@ -1,4 +1,12 @@
+// Date      : 2019-04-09 09:38:01
+// Author    : Wangjihe (wangjihe.mail@gmail.com)
+// Link      : wangjihe.cf
+// Algorithm : 
+// Notice    : None
 
+#include <bits/stdc++.h>
+
+using namespace std;
 class IO
 {
 private:
@@ -80,3 +88,39 @@ public:
 		#warning Please use c++11 to enable all features of IO
 	#endif
 }IO;
+
+const int MAXM = 100009;
+
+int m;
+long long sum=0,ans=0,cntF=0,n;
+long long x[MAXM];
+int len[MAXM],Max[MAXM],p[MAXM];
+char s[2*MAXM];
+
+int main()
+{
+	freopen("queue.in","r",stdin);
+	freopen("queue.out","w",stdout);
+	memset(Max,-1,sizeof Max);
+	IO.scan(n,m);
+	for (int i=1;i<=m;i++)
+	{
+		IO.scan(s,x[i]);
+		len[i]=strlen(s);
+		for (int j=len[i]-1;~j;j--)
+			p[i]+=(s[j]=='M'?1:-1),Max[i]=max(Max[i],p[i]-1);
+		cntF+=-1ll*p[i]*x[i];
+	}
+	if (cntF<0)
+		return IO.print(-1),0;
+	for (int i=m;i;i--)
+	{
+		if (p[i]>0)
+			ans=max(ans,sum+1ll*p[i]*(x[i]-1)+Max[i]);
+		else
+			ans=max(ans,sum+Max[i]);
+		sum+=1ll*x[i]*p[i];
+	}
+	IO.print(ans,'\n');
+	return 0;
+}

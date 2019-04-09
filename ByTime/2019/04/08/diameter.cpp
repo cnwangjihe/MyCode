@@ -1,3 +1,12 @@
+// Date      : 2019-04-08 10:41:53
+// Author    : Wangjihe (wangjihe.mail@gmail.com)
+// Link      : wangjihe.cf
+// Algorithm : 
+// Notice    : None
+
+#include <bits/stdc++.h>
+
+using namespace std;
 
 class IO
 {
@@ -80,3 +89,49 @@ public:
 		#warning Please use c++11 to enable all features of IO
 	#endif
 }IO;
+
+int k;
+
+int main()
+{
+//	freopen("diameter.in","r",stdin);
+//	freopen("diameter.out","w",stdout);
+	IO.scan(k);
+	int n=4998;
+	for (int a=1;a<=n;a++)
+		for (int b=0;a+b<=n;b++)
+		{
+			if ((k-a*b)%(a+b))
+				continue;
+			int c=(k-a*b)/(a+b);
+			int cnt=a+b+c+(!!a)+(!!b)+(!!c);
+			if (cnt+1>5000 || (c==0 && b==0))
+				continue;
+			cerr << a << ' ' << b << ' ' << c << ' ' << cnt << '\n';
+			int fp=1,u;
+			IO.print(cnt+1,"\n");
+			if (a)
+			{
+				u=++fp;
+				IO.print(u,' ',1," 1\n");
+				for (int i=0;i<a;i++)
+					IO.print(++fp,' ',u," 1\n");
+			}
+			if (b)
+			{
+				u=++fp;
+				IO.print(u,' ',1," 1\n");
+				for (int i=0;i<b;i++)
+					IO.print(++fp,' ',u," 1\n");
+			}
+			if (c)
+			{
+				u=++fp;
+				IO.print(u,' ',1," 1\n");
+				for (int i=0;i<c;i++)
+					IO.print(++fp,' ',u," 1\n");
+			}
+			return 0;
+		}
+	return 0;
+}

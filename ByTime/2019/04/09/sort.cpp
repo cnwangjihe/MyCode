@@ -1,3 +1,14 @@
+// Date      : 2019-04-09 08:31:44
+// Author    : Wangjihe (wangjihe.mail@gmail.com)
+// Link      : wangjihe.cf
+// Algorithm : 
+// Notice    : None
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define LOG2(X) ((unsigned) (8*sizeof (unsigned long) - __builtin_clzl((X)) - 1))
 
 class IO
 {
@@ -80,3 +91,56 @@ public:
 		#warning Please use c++11 to enable all features of IO
 	#endif
 }IO;
+
+const int MAXK = 32,
+		  MAXN = 1000009;
+
+int f[2][MAXK];
+int a[MAXN];
+int n,q;
+
+inline void Add(int v,int i) {if (!v) return ;v=LOG2(v),f[((a[i]&(1<<v))==0)][v]++;}
+inline void Del(int v,int i) {if (!v) return ;v=LOG2(v),f[((a[i]&(1<<v))==0)][v]--;}
+inline int GetAns()
+{
+	int ans=0;
+	for (int i=0;i<=30;i++)
+	{
+		if (f[0][i] && f[1][i])
+			return -1;
+		ans|=(f[1][i]!=0)*(1<<i);
+	}
+	return ans;
+}
+
+int main()
+{
+	freopen("sort.in","r",stdin);
+	freopen("sort.out","w",stdout);
+	int x,y;
+	IO.scan(n);
+	for (int i=1;i<=n;i++)
+		IO.scan(a[i]);
+	for (int i=2;i<=n;i++)
+		Add(a[i]^a[i-1],i);
+//	for (int i=0;i<30;i++)
+//		cerr << f[0][i] << ' ' << f[1][i] << '\n';
+//	return 0;
+	IO.print(GetAns(),'\n');
+	IO.scan(q);
+	for (int i=0;i<q;i++)
+	{
+		IO.scan(x,y);
+		if (x!=1)
+			Del(a[x]^a[x-1],x);
+		if (x!=n)
+			Del(a[x+1]^a[x],x+1);
+		a[x]=y;
+		if (x!=1)
+			Add(a[x]^a[x-1],x);
+		if (x!=n)
+			Add(a[x+1]^a[x],x+1);
+		IO.print(GetAns(),'\n');
+	}
+	return 0;
+}
