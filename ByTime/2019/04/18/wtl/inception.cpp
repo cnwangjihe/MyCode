@@ -1,0 +1,174 @@
+// Date      : 2019-04-18 11:17:51
+// Author    : Wangjihe (wangjihe.mail@gmail.com)
+// Link      : wangjihe.cf
+// Algorithm : 
+// Notice    : None
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class IO
+{
+private:
+	char rbuf[100000],*rp1=rbuf,*rp2=rbuf;
+	char wbuf[100000],*wp=wbuf;
+	IO(){}
+	struct ObjectCreator{ObjectCreator(){IO::GetInstance();}};
+	static ObjectCreator _oc;
+public:
+	static IO &GetInstance(){static IO Instance;return Instance;}
+	inline void flush() {fwrite(wbuf,1,wp-wbuf,stdout);wp=wbuf;}
+	~IO(){flush();}
+	#ifndef DEBUG
+		inline char getchar(){return rp1==rp2&&(rp2=(rp1=rbuf)+fread(rbuf,1,100000,stdin),rp1==rp2)?-1:*rp1++;}
+		inline void putchar(char c){(wp-wbuf==100000)?(flush()):void();*wp++=c;}
+	#endif
+	inline void print(char c) {putchar(c);}
+	inline void print(const char *s)
+	{
+		int n=strlen(s);
+		for (int i=0;i<n;i++)
+			putchar(s[i]);
+		return ;
+	}
+	inline void print(const string s)
+	{
+		int n=s.size();
+		for (int i=0;i<n;i++)
+			putchar(s[i]);
+		return ;
+	}
+	inline int scan(char *s,int (*check)(int c)=isgraph)
+	{
+		int n=0;short c=getchar();
+		while (!check(c) && (~c))
+			c=getchar();
+		if (!~c)
+			return 0;
+		do {s[n++]=c,c=getchar();}
+			while (check(c));
+		s[n]='\0';
+		return n;
+	}
+	inline int scan(string &s,int (*check)(int c)=isgraph)
+	{
+		int n=0;short c=getchar();
+		s="";
+		while (!check(c) && (~c))
+			c=getchar();
+		if (!~c)
+			return 0;
+		do {s+=c,c=getchar();n++;}
+			while (check(c));
+		return n;
+	}
+	template<typename Number> void print(Number x)
+	{
+		if (x<0)
+			putchar('-'),x=-x;
+		if (x>9)
+			print(x/10);
+		putchar(x%10+48);
+	}
+	template<typename Number> int scan(Number &x)
+	{
+		bool f=0;x=0;short c=getchar();
+		while (!isdigit(c) && (~c))
+			f|=(c=='-'),c=getchar();
+		if (!~c)
+			return 0;
+		do {x=x*10+c-48,c=getchar();}
+			while (isdigit(c));
+		x=(f?x*-1:x);
+		return 1;
+	}
+	inline void println(){putchar('\n');}
+	#if __cplusplus >= 201103L
+		template<typename Number,typename... Numbers>
+		inline void print(Number x,Numbers... X) {print(x),print(X...);}
+		template<typename Number,typename... Numbers>
+		inline int scan(Number &x,Numbers &... X) {return scan(x)+scan(X...);}
+	#else
+		#warning Please use c++11 to enable all features of IO
+	#endif
+};
+
+IO &IO=IO::GetInstance();
+
+
+const int MAXN = 100009,
+		  INF  = 1000000009;
+
+queue<int> Q;
+int dis[MAXN],s[MAXN];
+int _head[MAXN],_next[MAXN*2],_node[MAXN*2];
+int a[MAXN];
+int n,q,m=0,fp=0;
+
+inline void _connect(int a,int b)
+{
+	_next[fp]=_head[a];
+	_node[fp]=b;
+	_head[a]=fp++;
+	return ;
+}
+
+void bfs(int S)
+{
+	Q.push(S);
+	dis[S]=0;
+	int u,v;
+	while (!Q.empty())
+	{
+		u=Q.front(),Q.pop();
+		for (int i=_head[u];~i;i=_next[i])
+		{
+			v=_node[i];
+			if (dis[u]+1<dis[v])
+				dis[v]=dis[u]+1,Q.push(v);
+		}
+	}
+	return ;
+}
+
+void Force1()
+{
+	int ans;
+	for (int i=1;i<=q;i++)
+	{
+		ans=0;
+		fill(dis,dis+n+1,INF);
+		for (int j=s[i-1];j<s[i];j++)
+			bfs(a[j]);
+		for (int j=1;j<=n;j++)
+			ans=max(ans,dis[j]);
+		IO.print(ans,'\n');
+	}
+	return ;
+}
+
+int main()
+{
+	freopen("inception.in","r",stdin);
+	freopen("inception.out","w",stdout);
+	memset(_head,-1,sizeof _head);
+	int x,y,k;
+	IO.scan(n,q);
+	for (int i=1;i<n;i++)
+	{
+		IO.scan(x,y);
+		_connect(x,y);
+		_connect(y,x);
+	}
+	for (int i=1;i<=q;i++)
+	{
+		IO.scan(k);
+		s[i]=s[i-1]+k,m+=k;
+		for (int j=s[i-1];j<s[i];j++)
+			IO.scan(a[j]);
+	}
+//	if (1ll*n*m<100000000ll)
+		return Force1(),0;
+	return 0;
+}
