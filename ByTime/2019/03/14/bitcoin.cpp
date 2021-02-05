@@ -65,8 +65,8 @@ int q;
 
 int main()
 {
-	freopen("bitcoin.in","r",stdin);
-	freopen("bitcoin.out","w",stdout);
+	// freopen("bitcoin.in","r",stdin);
+	// freopen("bitcoin.out","w",stdout);
 	scanf("%d",&q);
 	int t,x,v,tmp;
 	for (int i=0;i<18;i++)
